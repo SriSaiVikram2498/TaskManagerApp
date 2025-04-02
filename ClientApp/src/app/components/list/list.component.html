@@ -1,0 +1,59 @@
+<div class=" container rounded-3 border border-2 border-dark my-5 bg-white" style="height:auto;">
+    <div>
+        <h1 class=" h1">Hi👋🏻, {{username}}! This is your tasks!</h1>
+        <div class="row">
+            <div class=" col-8">
+                <input class=" py-3 form-control shadow" placeholder="Enter your task" type="text" [(ngModel)]="title"
+                    (keyup.enter)="addTask()">
+            </div>
+            <div class="col-2">
+                <button class=" mt-2 btn btn-dark" (click)="addTask()"> Add </button>
+            </div>
+            <div class="spaceVertical"></div>
+            <div>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" [checked]="isNewStart"
+                    (change)="toggleSortCheck()">
+                    <label class="btn btn-outline-dark" for="btnradio1">New</label>
+                    
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" [checked]="!isNewStart"
+                    (change)="toggleSortCheck()">
+                    <label class="btn btn-outline-dark" for="btnradio2">Old</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row rounded bg-white">
+        <div class=" col-12">
+            <ul class=" list-group" id="list">
+                <li class=" my-3 py-3 shadow list-group-item " *ngFor="let task of getTasks()"  >
+                    <div class="row">
+                        <div class="col-1">
+                            <input class="" type="checkbox" [checked]="task.IsDone"
+                            (change)="togglecheck(task)">
+                        </div>
+                        <div class="col-6">
+                            <label *ngIf="task.isEditMode">Title:</label>
+                            <label  class="h4 " [ngClass]="{'text-decoration-line-through': task.IsDone}" *ngIf="!task.isEditMode">
+                                {{task.Title}}
+                            </label>
+                            <input  class="form-control shadow h3" *ngIf="task.isEditMode" type="text" [(ngModel)]="task.Title"
+                                (keyup.enter)="editTask(task)">
+
+                        </div>
+                        <div class="col-4">
+                            <button class=" btn btn-dark" (click)="remove(task)">Delete</button>
+                            <div class="spaceHorisontal"></div>
+                            <button class=" btn btn-dark" (click)="saveEditToggle(task)">{{(task.isEditMode ? 'Save':'Edit')}}</button>
+                        </div>
+                    </div>
+                    <div class="row descriptionField" *ngIf="task.isEditMode" >
+                        <label >Description:</label>
+                        <textarea [(ngModel)]="task.Description" class="form-control shadow"></textarea>
+                    </div>
+                </li> 
+            </ul>
+        </div>
+    </div>
+</div>
