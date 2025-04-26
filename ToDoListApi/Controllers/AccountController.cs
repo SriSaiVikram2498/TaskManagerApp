@@ -49,4 +49,12 @@ public class AccountController : ControllerBase
         }
         return result;
     }
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
+    {
+        var result = await _loginService.ResetPasswordAsync(model);
+        if (!result) return BadRequest("User not found");
+        return Ok("Password reset successfully");
+    }
+
 }

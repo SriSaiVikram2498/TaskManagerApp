@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+/* Add some top margin to push content below navbar */
+main {
+    margin-top: 70px; /* Adjust depending on navbar height */
+    padding: 1rem;
+  }
+  

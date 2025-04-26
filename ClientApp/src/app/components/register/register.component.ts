@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountService } from '../../services/accountService';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router'; // For routing
 
 @Component({
   selector: 'app-register',
@@ -14,19 +15,18 @@ export class RegisterComponent {
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
 
- constructor(private accountService: AccountService){
+  constructor(private accountService: AccountService, private router: Router) {}
 
- }
-
-  register(){
+  register() {
     this.accountService.register(this.model).subscribe({
-      next: () =>{
-        this.cancel();
+      next: () => {
+        this.router.navigateByUrl('/list'); //  Redirect after successful registration
       },
       error: error => console.log(error)
     });
   }
-  cancel(){
-    this.cancelRegister.emit(false);    
+
+  cancel() {
+    this.cancelRegister.emit(false);
   }
 }

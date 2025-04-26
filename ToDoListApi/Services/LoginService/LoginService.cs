@@ -8,8 +8,23 @@ using ToDoListApi.Services.JwtTokenService;
 
 namespace ToDoListApi.Services.LoginService
 {
+    
     public class LoginService : ILoginService
     {
+        public async Task<bool> ResetPasswordAsync(ForgotPasswordModel model)
+        {
+            var user = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
+            if (user == null) return false;
+
+            using var hmac = new HMACSHA512();
+            user.PasswordSalt = hmac.Key;
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(model.NewPassword));
+            
+            await _appDbContext.SaveChangesAsync();
+            return true;
+        }
+
+
         private readonly AppDbContext _appDbContext;
         private readonly IJwtTokenService _jwtTokenService;
 

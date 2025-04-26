@@ -3,7 +3,7 @@
         <a class="navbar-brand" href="#">Task Manager App</a>
 
 
-        <div ngbDropdown class="dropdown" *ngIf="accoutnService.currentUser$ | async">
+        <div ngbDropdown class="dropdown" *ngIf="accountService.currentUser$ | async">
             <a ngbDropdownToggle class="dropdown-toggle text-light text-decoration-none">Welcome user</a>
             <div ngbDropdownMenu class="dropdown-menu">
                 <!-- <a ngbDropdownItem class="drowndown-item">Edit Profile</a> -->
@@ -11,12 +11,15 @@
             </div>
         </div>
 
-        <form class="d-flex" (ngSubmit)="login()" autocomplete="off" *ngIf="!(accoutnService.currentUser$ | async)">
-            <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text"
-                placeholder="Username">
-            <input name="password" [(ngModel)]="model.password" class="form-control me-2" type="password"
-                placeholder="Password">
+        <form class="d-flex align-items-center gap-2" (ngSubmit)="login()" autocomplete="off" *ngIf="!(accountService.currentUser$ | async)">
+            <input name="username" [(ngModel)]="model.username" class="form-control" type="text" placeholder="Username" />
+          
+            <input name="password" [(ngModel)]="model.password" class="form-control" type="password" placeholder="Password" />
+          
+            <a [routerLink]="['/forgot-password']" class="btn btn-link p-0">Forgot Password?</a>
+          
             <button class="btn btn-outline-success" type="submit">Login</button>
-        </form>
+          </form>
+          
     </div>
 </nav>
